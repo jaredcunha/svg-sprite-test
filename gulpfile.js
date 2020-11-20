@@ -21,6 +21,13 @@ const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const uswds = require("./node_modules/uswds-gulp/config/uswds");
 
+//
+const clean = require('gulp-clean');
+const svgSprite = require('gulp-svg-sprite');
+const rename = require('gulp-rename');
+const { Stream } = require('stream');
+//
+
 sass.compiler = require("sass");
 
 /*
@@ -110,6 +117,46 @@ gulp.task("build-sass", function(done) {
   );
 });
 
+//// More complex configuration example
+config = {
+  shape: {
+    dimension: { // Set maximum dimensions
+      maxWidth: 24,
+      maxHeight: 24
+    },
+    id: {
+      separator: "-"
+    },
+    spacing: { // Add padding
+      padding: 0
+    }
+  },
+  mode: {
+    symbol: true, // Activate the «symbol» mode
+    dest: "foo"
+  }
+};
+
+gulp.task("build-sprite", function (done) {
+  gulp.src(`${IMG_DEST}/usa-icons/**/*.svg`)
+    .pipe(svgSprite(config))
+    .on('error', function(error) {
+      console.log("There was an error");
+    })
+    .pipe(gulp.dest(`${IMG_DEST}`))
+    .on('end', function () { done(); });
+ });
+
+ gulp.task("rename-sprite", function (done) {
+  gulp.src(`${IMG_DEST}/symbol/svg/sprite.symbol.svg`)
+    .pipe(rename(`${IMG_DEST}/sprite.svg`))
+    .pipe(gulp.dest(`./`))
+    .on('end', function () { done(); });
+  gulp.src(`${IMG_DEST}/symbol`, {allowEmpty: true})
+    .pipe(clean());
+ });
+ //
+
 gulp.task(
   "init",
   gulp.series(
@@ -128,3 +175,5 @@ gulp.task("watch-sass", function() {
 gulp.task("watch", gulp.series("build-sass", "watch-sass"));
 
 gulp.task("default", gulp.series("watch"));
+
+gulp.task("svg-sprite", gulp.series("build-sprite", "rename-sprite"));
