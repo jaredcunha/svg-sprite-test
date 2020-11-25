@@ -1,6 +1,10 @@
 # USWDS Icon prototype
 
-This is a prototype for how a team might modify a default svg icon sprite to suit the needs of their project. The default sprite will include only a handful of what the entire icon set provides in order to maintain a smaller footprint. . 
+This is a prototype for how a team might modify a default svg icon sprite to suit the needs of their project. The default sprite will include only a handful of what the entire icon set provides in order to maintain a smaller footprint. 
+
+This project uses the [USWDS Gulp file](https://github.com/uswds/uswds-gulp/), and the purpose is to test the workflow for managing the SVG sprite. 
+
+The only thing that really matters is that the icons are working and that the workflow makes sense. 
 
 ## Getting started
 
