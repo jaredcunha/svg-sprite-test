@@ -14,6 +14,7 @@ First, you will need to clone this repo. Other dependencies include:
 
 ```bash
 $ npm install
+$ bundle install
 $ bundle exec jekyll serve
 ```
 
