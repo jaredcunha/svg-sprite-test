@@ -25,7 +25,6 @@ const uswds = require("./node_modules/uswds-gulp/config/uswds");
 const del = require('del');
 const svgSprite = require('gulp-svg-sprite');
 const rename = require('gulp-rename');
-const { Stream } = require('stream');
 //
 
 sass.compiler = require("sass");
