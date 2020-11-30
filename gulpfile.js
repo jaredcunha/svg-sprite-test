@@ -22,7 +22,7 @@ const sourcemaps = require("gulp-sourcemaps");
 const uswds = require("./node_modules/uswds-gulp/config/uswds");
 
 //
-const clean = require('gulp-clean');
+const del = require('del');
 const svgSprite = require('gulp-svg-sprite');
 const rename = require('gulp-rename');
 const { Stream } = require('stream');
@@ -152,9 +152,12 @@ gulp.task("build-sprite", function (done) {
     .pipe(rename(`${IMG_DEST}/sprite.svg`))
     .pipe(gulp.dest(`./`))
     .on('end', function () { done(); });
-  gulp.src(`${IMG_DEST}/symbol`, {allowEmpty: true})
-    .pipe(clean());
  });
+
+ gulp.task("clean-sprite", function(cb) {
+  cb();
+  return del.sync(`${IMG_DEST}/symbol`);
+});
  //
 
 gulp.task(
@@ -176,4 +179,4 @@ gulp.task("watch", gulp.series("build-sass", "watch-sass"));
 
 gulp.task("default", gulp.series("watch"));
 
-gulp.task("svg-sprite", gulp.series("build-sprite", "rename-sprite"));
+gulp.task("svg-sprite", gulp.series("build-sprite", "rename-sprite", "clean-sprite"));
